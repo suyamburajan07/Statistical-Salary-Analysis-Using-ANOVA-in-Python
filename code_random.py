@@ -1,46 +1,51 @@
+import numpy as np
 import pandas as pd
 from scipy import stats
 import matplotlib.pyplot as plt
 
-google = [120000, 125000, 130000, 115000, 128000]  # Salaries for Google employees
-samsung = [95000, 98000, 92000, 97000, 94000]  # Salaries for Samsung employees
-apple = [140000, 135000, 142000, 138000, 145000]  # Salaries for Apple employees
+np.random.seed(42)
+group1 = np.random.normal(loc=50, scale=5, size=30)
+group2 = np.random.normal(loc=55, scale=5, size=30)
+group3 = np.random.normal(loc=60, scale=5, size=30)
+
 
 data = pd.DataFrame({
-    'Company': ['Google'] * len(google) + ['Samsung'] * len(samsung) + ['Apple'] * len(apple),
-    'Salary': google + samsung + apple
+    'Group': ['Group1'] * len(group1) + ['Group2'] * len(group2) + ['Group3'] * len(group3),
+    'Scores': np.concatenate([group1, group2, group3])
 })
 
-data.to_csv('salary_data.csv', index=False)
-print("Raw salary data saved to 'salary_data.csv'.")
+print(data.head())
+print(data.describe())
 
-f_statistic, p_value = stats.f_oneway(google, samsung, apple)
+f_statistic, p_value = stats.f_oneway(group1, group2, group3)
 
 print(f"F-Statistic: {f_statistic:.2f}")
 print(f"P-Value: {p_value:.4f}")
 
 if p_value < 0.05:
-    print("Reject the null hypothesis: There is a significant difference in salaries between the companies.")
+    print("Reject the null hypothesis: There is a significant difference between the group means.")
 else:
-    print("Fail to reject the null hypothesis: No significant difference in salaries between the companies.")
+    print("Fail to reject the null hypothesis: No significant difference between the group means.")
 
-summary = pd.DataFrame({
-    'Company': ['Google', 'Samsung', 'Apple'],
-    'Mean Salary': [sum(google) / len(google), sum(samsung) / len(samsung), sum(apple) / len(apple)],
-    'StdDev Salary': [pd.Series(google).std(ddof=1), pd.Series(samsung).std(ddof=1), pd.Series(apple).std(ddof=1)]  # ddof=1 for sample std
+plt.figure(figsize=(10, 6))
+plt.boxplot([group1, group2, group3], labels=['Group1', 'Group2', 'Group3'])
+plt.title('Boxplot of Group Scores')
+plt.ylabel('Scores')
+plt.show()
+
+group_means = [np.mean(group) for group in [group1, group2, group3]]
+group_std = [np.std(group) for group in [group1, group2, group3]]
+
+plt.figure(figsize=(10, 6))
+plt.bar(['Group1', 'Group2', 'Group3'], group_means, yerr=group_std, capsize=5, color=['blue', 'orange', 'green'])
+plt.title('Group Means with Standard Deviation')
+plt.ylabel('Mean Score')
+plt.show()
+
+data.to_csv('anova_data.csv', index=False)
+results = pd.DataFrame({
+    'Group': ['Group1', 'Group2', 'Group3'],
+    'Mean': group_means,
+    'StdDev': group_std
 })
-
-summary.to_csv('salary_summary.csv', index=False)
-print("Summary statistics saved to 'salary_summary.csv'.")
-
-plt.figure(figsize=(10, 6))
-plt.boxplot([google, samsung, apple], labels=['Google', 'Samsung', 'Apple'])
-plt.title('Boxplot of Salaries by Company')
-plt.ylabel('Salary')
-plt.show()
-
-plt.figure(figsize=(10, 6))
-plt.bar(summary['Company'], summary['Mean Salary'], yerr=summary['StdDev Salary'], capsize=5, color=['blue', 'orange', 'green'])
-plt.title('Mean Salaries by Company with Standard Deviations')
-plt.ylabel('Salary')
-plt.show()
+results.to_csv('anova_results.csv', index=False)
