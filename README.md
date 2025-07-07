@@ -4,7 +4,7 @@ This project demonstrates how to perform **Analysis of Variance (ANOVA)** using 
 
 ---
 
-## 🔍 Overview
+## Overview
 
 The goal of this project is to determine whether there are statistically significant differences in mean salaries between companies (e.g., Google, Samsung, Apple) using ANOVA. The code is designed for flexibility and supports:
 
@@ -13,7 +13,7 @@ The goal of this project is to determine whether there are statistically signifi
 
 ---
 
-## 📊 Features
+## Features
 
 - Generate or input salary data for three companies
 - Perform one-way ANOVA test (`scipy.stats.f_oneway`)
@@ -25,7 +25,7 @@ The goal of this project is to determine whether there are statistically signifi
 
 ---
 
-## 🧑‍💻 Technologies Used
+## Technologies Used
 
 - Python 3.x
 - Pandas
@@ -35,9 +35,9 @@ The goal of this project is to determine whether there are statistically signifi
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/anova-salary-analysis.git
-   cd anova-salary-analysis
+   git clone https://github.com/suyamburajan07/Statistical-Salary-Analysis-Using-ANOVA-in-Python.git
+   cd Statistical-Salary-Analysis-Using-ANOVA-in-Python
