@@ -4,7 +4,7 @@ from scipy import stats
 import matplotlib.pyplot as plt
 
 # Step 1: Manually Input Scores for Each Group
-group1 = [52.48, 49.23, 50.13, 47.56, 53.21]
+group1 = [52.48, 49.23, 50.13, 47.56, 53.26]
 group2 = [56.15, 55.87, 54.91, 53.76, 57.89]
 group3 = [59.02, 60.71, 57.89, 61.34, 58.45]
 
